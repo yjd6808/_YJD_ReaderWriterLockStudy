@@ -17,6 +17,7 @@
 #include <chrono>
 
 #include "my_atomic_rwlock.h"
+#include "my_cond_rwlock.h"
 
 using namespace std::chrono_literals;
 
@@ -26,7 +27,13 @@ using namespace std::chrono_literals;
 
 #define TESTCASE      STD_RWTEST
 
-my_atomic_rwlock my_rwlock;
+// 1또는 0으로 바꿔서 테스트하면 됨
+#if 1
+  my_cond_rwlock my_rwlock;
+#else
+  my_atomic_rwlock my_rwlock;
+#endif
+
 std::shared_mutex std_rwlock;
 std::mutex std_lock;
 
@@ -84,7 +91,7 @@ static void rwlock_test_setup(const benchmark::State& s)
   const int write_count = static_cast<int>(s.range(0));
   const int writer_thread_count = static_cast<int>(s.range(1));
 
-  // 먼저 관측가능한 값을 세팅해준다.
+  // 먼저 관측가능한 값들을 세팅해준다.
   for (int i = 0; i <= writer_thread_count; ++i)
     possible_observable_values.push_back(i * write_count);
 }
@@ -96,8 +103,17 @@ static void rwlock_test_teardown(const benchmark::State& s)
     if (std::ranges::find(possible_observable_values, r) == possible_observable_values.end())
       assert(false);
 
+  /*
+  중간에 읽기가 어떻게 수행되는지 확인용 (관측가능한 값들 중 하나)
+  const int writer_thread_count = static_cast<int>(s.range(1));
+  for (int i = writer_thread_count; i < 8; i++)
+    std::cout << read_values[i] << "\n";
+  std::cout << "===================\n";
+  */
+
   // 초기화
-  for (int& r : read_values) r = 0;
+  for (int i = 0; i < 8; i++)
+    read_values[i] = 0;
   write_value = 0;
   possible_observable_values.clear();
 }

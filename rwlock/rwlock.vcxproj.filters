@@ -17,5 +17,8 @@
     <ClInclude Include="include\my_atomic_rwlock.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\my_cond_rwlock.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
