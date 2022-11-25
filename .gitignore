@@ -1,0 +1,6 @@
+build/
+out/
+intermediate/
+.vs/
+.vscode/
+.git/

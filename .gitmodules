@@ -1,0 +1,6 @@
+[submodule "third_party/benchmark"]
+	path = third_party/benchmark
+	url = https://github.com/google/benchmark.git
+[submodule "third_party/ready_thread"]
+	path = third_party/ready_thread
+	url = https://github.com/yjd6808/_YJD_ready_thread.git
