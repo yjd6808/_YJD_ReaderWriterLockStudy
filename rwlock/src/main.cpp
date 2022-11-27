@@ -25,10 +25,10 @@ using namespace std::chrono_literals;
 #define STD_RWTEST    2     // 표준 rw락으로 테스트
 #define STD_MTXTEST   3     // 표준 뮤텍스로 테스트
 
-#define TESTCASE      STD_RWTEST
+#define TESTCASE      MY_RWTEST
 
 // 1또는 0으로 바꿔서 테스트하면 됨
-#if 1
+#if 0
   my_cond_rwlock my_rwlock;
 #else
   my_atomic_rwlock my_rwlock;
@@ -176,7 +176,7 @@ static void std_mutex_test(benchmark::State& state)
 {
   {   10'000'000},                                                   
   {            1,  2, 4, 6},     
-  {           10}                                                    
+  {            0, 10}                                                    
 });
 
 
